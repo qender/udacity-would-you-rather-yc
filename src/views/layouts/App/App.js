@@ -1,24 +1,32 @@
-import React from 'react';
-import './App.css';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Home from '../../pages/Home/home';
+import Leaderboard from '../../pages/Leaderboard/leaderboard';
+import Login from '../../pages/Login/login';
+import Poll from '../../pages/Poll/poll';
+import NewQuestion from '../../pages/NewQuestion/new-question';
+import NotFound from '../../pages/NotFound/not-found';
+import NavBar from '../../layouts/NavBar/nav-bar';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+    render() {
+        return (
+            <BrowserRouter>
+                <Fragment>
+                    <NavBar />
+                    <Switch>
+                        <Route path='/' exact component={Home} />
+                        <Route path='/leaderboard' component={Leaderboard} />
+                        <Route path='/questions' component={Poll} />
+                        <Route path='/add' component={NewQuestion} />
+                        <Route path='/login' component={Login} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Fragment>
+            </BrowserRouter>
+        );
+    }
 }
 
 export default App;
