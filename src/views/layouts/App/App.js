@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from '../../pages/Home/home';
 import Leaderboard from '../../pages/Leaderboard/leaderboard';
-import Login from '../../pages/Login/login';
+import LoginContainer from '../../pages/Login/login-container';
 import Poll from '../../pages/Poll/poll';
 import NewQuestion from '../../pages/NewQuestion/new-question';
 import NotFound from '../../pages/NotFound/not-found';
@@ -29,7 +29,7 @@ class App extends Component {
                         {/*<Route component={NotFound} />*/}
                     {/*</Switch>*/}
                 {/*</Fragment>*/}
-                <Route path='/login' component={Login} />
+                <Route path='/login' component={LoginContainer} />
             </BrowserRouter>
         );
     }
