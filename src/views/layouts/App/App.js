@@ -7,26 +7,32 @@ import Poll from '../../pages/Poll/poll';
 import NewQuestion from '../../pages/NewQuestion/new-question';
 import NotFound from '../../pages/NotFound/not-found';
 import NavBar from '../../layouts/NavBar/nav-bar';
+import { connect } from 'react-redux'
+import { userThunks } from "../../../redux/slices/users";
 
 
 class App extends Component {
+    componentDidMount() {
+        this.props.dispatch(userThunks.handleGetUsers());
+    }
+
     render() {
         return (
             <BrowserRouter>
-                <Fragment>
-                    <NavBar />
-                    <Switch>
-                        <Route path='/' exact component={Home} />
-                        <Route path='/leaderboard' component={Leaderboard} />
-                        <Route path='/questions' component={Poll} />
-                        <Route path='/add' component={NewQuestion} />
-                        <Route path='/login' component={Login} />
-                        <Route component={NotFound} />
-                    </Switch>
-                </Fragment>
+                {/*<Fragment>*/}
+                    {/*<NavBar />*/}
+                    {/*<Switch>*/}
+                        {/*<Route path='/' exact component={Home} />*/}
+                        {/*<Route path='/leaderboard' component={Leaderboard} />*/}
+                        {/*<Route path='/questions' component={Poll} />*/}
+                        {/*<Route path='/add' component={NewQuestion} />*/}
+                        {/*<Route component={NotFound} />*/}
+                    {/*</Switch>*/}
+                {/*</Fragment>*/}
+                <Route path='/login' component={Login} />
             </BrowserRouter>
         );
     }
 }
 
-export default App;
+export default connect()(App);
