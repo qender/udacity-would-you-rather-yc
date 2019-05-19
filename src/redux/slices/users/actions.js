@@ -1,9 +1,9 @@
 import types from './types';
 
 
-export function receiveUsers(users) {
+export const receiveUsers = (users) => {
 	return {
 		type: types.RECEIVE_USERS,
 		users
 	}
-}
+};

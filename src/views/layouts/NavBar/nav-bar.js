@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import { Link } from 'react-router-dom';
 import Tab from '@material-ui/core/Tab';
-import UserCorner from "../UserCorner/user-corner";
+import UserCornerContainer from "../UserCorner/user-corner-container";
 import { getTabIndex } from './helpers';
 
 import './nav-bar.css';
@@ -37,7 +37,7 @@ class NavBar extends Component {
 							<Tab label="New Question" component={Link} to="/add" />
 							<Tab label="Leaderboard" component={Link} to="/leaderboard" />
 						</Tabs>
-						<UserCorner />
+						<UserCornerContainer />
 					</div>
 				</AppBar>
 			</div>

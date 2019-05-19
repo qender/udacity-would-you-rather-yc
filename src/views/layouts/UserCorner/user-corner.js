@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import Avatar from '@material-ui/core/Avatar';
 
 import './user-corner.css';
 
@@ -21,10 +20,11 @@ class UserCorner extends Component {
   	};
 
 	handleLogOut = () => {
-		this.handleClose();
+		this.props.handleLogOut()
 	};
 
 	render() {
+		const { authedUser } = this.props;
 		const { anchorEl } = this.state;
 		const open = Boolean(anchorEl);
 		const menuOrigin = {
@@ -33,18 +33,18 @@ class UserCorner extends Component {
 		};
 
 		return (
-			<div>
-				<span className="user-corner_greeting">Hey Sarah Edo!</span>
-				<IconButton
-					aria-owns={open ? 'user-corner_menu' : undefined}
-					aria-haspopup="true"
-					onClick={this.handleMenu}
-					color="inherit"
-				>
-					<AccountCircle />
-				</IconButton>
+			<div className="user-corner">
+				<span className="user-corner__greeting">Hey {authedUser.name}!</span>
+				<div className="user-corner__avatar-container">
+					<Avatar alt={authedUser.name}
+							src={authedUser.avatarURL}
+							aria-owns={open ? 'user-corner__menu' : undefined}
+							aria-haspopup="true"
+							onClick={this.handleMenu} />
+				</div>
+
 				<Menu
-					id="user-corner_menu"
+					id="user-corner__menu"
 					anchorEl={anchorEl}
 					anchorOrigin={menuOrigin}
 					transformOrigin={menuOrigin}

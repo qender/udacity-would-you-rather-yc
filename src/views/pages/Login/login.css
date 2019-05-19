@@ -36,3 +36,7 @@
 .login__menu-item {
     padding: 20px !important;
 }
+
+.login__error {
+    margin-top: 20px;
+}

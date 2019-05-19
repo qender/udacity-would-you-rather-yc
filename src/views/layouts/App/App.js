@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../../pages/Home/home';
 import Leaderboard from '../../pages/Leaderboard/leaderboard';
 import LoginContainer from '../../pages/Login/login-container';
@@ -19,20 +19,31 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                {/*<Fragment>*/}
-                    {/*<NavBar />*/}
-                    {/*<Switch>*/}
-                        {/*<Route path='/' exact component={Home} />*/}
-                        {/*<Route path='/leaderboard' component={Leaderboard} />*/}
-                        {/*<Route path='/questions' component={Poll} />*/}
-                        {/*<Route path='/add' component={NewQuestion} />*/}
-                        {/*<Route component={NotFound} />*/}
-                    {/*</Switch>*/}
-                {/*</Fragment>*/}
-                <Route path='/login' component={LoginContainer} />
+                {this.props.authedUser &&
+                <Fragment>
+                    <NavBar/>
+                    <Switch>
+                        <Route path='/' exact component={Home}/>
+                        <Route path='/leaderboard' component={Leaderboard}/>
+                        <Route path='/questions' component={Poll}/>
+                        <Route path='/add' component={NewQuestion}/>
+                        <Route component={NotFound}/>
+                    </Switch>
+                </Fragment>}
+                {!this.props.authedUser &&
+                <Switch>
+                    <Route path='/login' component={LoginContainer} />
+                    <Redirect to='/login' />
+                </Switch>}
             </BrowserRouter>
         );
     }
 }
 
-export default connect()(App);
+const mapStateToProps = ({ authedUser }) => {
+    return {
+        authedUser
+    }
+};
+
+export default connect(mapStateToProps)(App);

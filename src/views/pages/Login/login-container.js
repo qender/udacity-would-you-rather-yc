@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import Login from "./login";
 import { connect } from 'react-redux';
+import { authedUserThunks } from "../../../redux/slices/authedUser";
 
 
 class LoginContainer extends Component {
 	render() {
 		return (
-			<Login users={this.props.users} />
+			<Login
+				users={this.props.users}
+				setAuthedUser={this.props.setAuthedUser}
+			/>
 		);
 	}
 }
@@ -17,4 +21,8 @@ const mapStateToProps = ({users}) => {
 	}
 };
 
-export default connect(mapStateToProps)(LoginContainer);
+const mapDispatchToProps = {
+	setAuthedUser: authedUserThunks.setAuthedUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
