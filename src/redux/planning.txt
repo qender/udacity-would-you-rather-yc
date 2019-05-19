@@ -1,0 +1,15 @@
+### Data Types ###
+
+Questions
+Users
+AuthedUser
+
+
+### Actions ###
+
+GET_QUESTIONS
+GET_USERS
+ANSWER_QUESTION
+SAVE_QUESTION
+LOG_IN / SET_AUTHED_USER
+LOG_OUT / UNSET_AUTHED_USER
