@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -18,10 +17,9 @@ import './login.css';
 
 class Login extends Component {
 	state = {
-		user: '',
+		selectedUser: '',
 		labelWidth: 0,
-		error: null,
-		redirectUrl: null
+		error: null
 	};
 
 	componentDidMount() {
@@ -36,11 +34,11 @@ class Login extends Component {
 
 	handleLogIn = e => {
 		e.preventDefault();
-		if (this.state.user) {
-			this.setState(
-				{error: null, redirectUrl: '/'},
-				() => this.props.setAuthedUser(this.state.user)
-			);
+		if (this.state.selectedUser) {
+			this.props.setAuthedUser(this.state.selectedUser);
+			this.setState({
+				error: null
+			});
 		} else {
 			this.setState({error: 'Please select a user'});
 		}
@@ -48,10 +46,7 @@ class Login extends Component {
 
 	render() {
 		const { users } = this.props;
-
-		if (this.state.redirectUrl) {
-			return <Redirect to={this.state.redirectUrl} />
-		}
+		const { selectedUser, labelWidth, error } = this.state;
 
 		return (
 			<main className="login">
@@ -70,13 +65,13 @@ class Login extends Component {
 								User
 							</InputLabel>
 							<Select
-								value={this.state.user}
+								value={selectedUser}
 								onChange={this.handleSelectUser}
 								className="login__select"
 								input={
 									<OutlinedInput
-										labelWidth={this.state.labelWidth}
-										name="user"
+										labelWidth={labelWidth}
+										name="selectedUser"
 										id="select-user"
 									/>
 								}
@@ -95,8 +90,8 @@ class Login extends Component {
 							</Select>
 						</FormControl>
 
-						{this.state.error &&
-							<div className="login__error red-text">{this.state.error}</div>
+						{error &&
+							<div className="login__error red-text">{error}</div>
 						}
 
 						<div className="login__button">

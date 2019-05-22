@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { userThunks } from "../../../redux/slices/users";
 import Home from '../../pages/Home/home';
 import Leaderboard from '../../pages/Leaderboard/leaderboard';
 import LoginContainer from '../../pages/Login/login-container';
@@ -7,8 +9,7 @@ import Poll from '../../pages/Poll/poll';
 import NewQuestion from '../../pages/NewQuestion/new-question';
 import NotFound from '../../pages/NotFound/not-found';
 import NavBar from '../../layouts/NavBar/nav-bar';
-import { connect } from 'react-redux'
-import { userThunks } from "../../../redux/slices/users";
+import PrivateRouteContainer from "../../components/PrivateRoute/private-route-container";
 
 
 class App extends Component {
@@ -17,24 +18,21 @@ class App extends Component {
     }
 
     render() {
+        const { authedUser } = this.props;
+
         return (
             <BrowserRouter>
-                {this.props.authedUser &&
                 <Fragment>
-                    <NavBar/>
+                    {authedUser && <NavBar/>}
                     <Switch>
-                        <Route path='/' exact component={Home}/>
-                        <Route path='/leaderboard' component={Leaderboard}/>
-                        <Route path='/questions' component={Poll}/>
-                        <Route path='/add' component={NewQuestion}/>
+                        <PrivateRouteContainer path='/' exact component={Home} />
+                        <PrivateRouteContainer path='/leaderboard' component={Leaderboard} />
+                        <PrivateRouteContainer path='/questions' component={Poll} />
+                        <PrivateRouteContainer path='/add' component={NewQuestion} />
+                        <Route path='/login' exact component={LoginContainer} />
                         <Route component={NotFound}/>
                     </Switch>
-                </Fragment>}
-                {!this.props.authedUser &&
-                <Switch>
-                    <Route path='/login' component={LoginContainer} />
-                    <Redirect to='/login' />
-                </Switch>}
+                </Fragment>
             </BrowserRouter>
         );
     }

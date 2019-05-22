@@ -5,7 +5,7 @@ import {authedUserThunks} from "../../../redux/slices/authedUser";
 
 class UserCornerContainer extends Component {
 	handleLogOut = () => {
-		this.props.dispatch(this.props.unsetAuthedUser())
+		this.props.unsetAuthedUser();
 	};
 
 	render() {
@@ -26,8 +26,7 @@ const mapStateToProps = ({ users, authedUser }) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		dispatch,
-		unsetAuthedUser: authedUserThunks.unsetAuthedUser
+		unsetAuthedUser: () => dispatch(authedUserThunks.unsetAuthedUser())
 	}
 };
 
