@@ -1,0 +1,5 @@
+const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
+
+export default {
+	RECEIVE_QUESTIONS
+};

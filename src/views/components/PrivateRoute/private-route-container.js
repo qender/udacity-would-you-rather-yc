@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PrivateRoute from "./private-route";
+import { questionThunks } from "../../../redux/slices/questions";
 
 
 class PrivateRouteContainer extends Component {
+	componentDidMount() {
+		if (this.props.authedUser) {
+			this.props.dispatch(questionThunks.handleGetQuestions());
+		}
+	}
+
 	render() {
 		const { authedUser, ...ownProps } = this.props;
 

@@ -11,7 +11,7 @@ class LoginContainer extends Component {
 	};
 
 	setAuthedUser = (userId) => {
-		return this.props.setAuthedUser(userId);
+		this.props.dispatch(authedUserThunks.handleLogIn(userId));
 	};
 
 	render() {
@@ -30,6 +30,7 @@ class LoginContainer extends Component {
 	}
 }
 
+
 const mapStateToProps = ({ users, authedUser }, ownProps) => {
 	return {
 		users: Object.keys(users).map(userId => users[userId]),
@@ -38,10 +39,4 @@ const mapStateToProps = ({ users, authedUser }, ownProps) => {
 	}
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		setAuthedUser: (userId) => dispatch(authedUserThunks.setAuthedUser(userId))
-	}
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default connect(mapStateToProps)(LoginContainer);

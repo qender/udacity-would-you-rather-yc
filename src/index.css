@@ -3,6 +3,18 @@ body {
   font-family: "Roboto", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(245, 245, 245);
+}
+
+.page {
+  width: 600px;
+  margin: 40px auto;
+  background-color: white;
+  box-shadow: 0 0 7px 0 rgb(175, 175, 175);
+}
+
+.page-content {
+  padding: 12px;
 }
 
 .gray-text {
