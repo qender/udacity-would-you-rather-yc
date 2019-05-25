@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { userThunks } from "../../../redux/slices/users";
-import Home from '../../pages/Home/home';
+import HomeContainer from '../../pages/Home/home-container';
 import Leaderboard from '../../pages/Leaderboard/leaderboard';
 import LoginContainer from '../../pages/Login/login-container';
 import Poll from '../../pages/Poll/poll';
@@ -25,7 +25,7 @@ class App extends Component {
                 <Fragment>
                     {authedUser && <NavBar/>}
                     <Switch>
-                        <PrivateRouteContainer path='/' exact component={Home} />
+                        <PrivateRouteContainer path='/' exact component={HomeContainer} />
                         <PrivateRouteContainer path='/leaderboard' component={Leaderboard} />
                         <PrivateRouteContainer path='/questions' component={Poll} />
                         <PrivateRouteContainer path='/add' component={NewQuestion} />
