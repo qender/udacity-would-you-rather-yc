@@ -9,17 +9,17 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import Loader from '../../components/Loader/loader';
-import {CircularProgress} from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { questionThunks } from '../../../redux/slices/questions';
 
 import './question.css';
+import QuestionResults from "../QuestionResults/question-results";
 
 
 class Question extends Component {
 	state = {
 		answer: null,
-		submittingAnswer: false,
-		redirectToHome: false
+		submittingAnswer: false
 	};
 
 	handleAnswerQuestion = () => {
@@ -35,7 +35,7 @@ class Question extends Component {
 				qid: question.id,
 				answer: this.state.answer || authedUser.answers[question.id]
 			})
-		).then( () => this.setState({ submittingAnswer: false, redirectToHome: true }));
+		).then( () => this.setState({ submittingAnswer: false }));
 	};
 
 	handleSelectOption = event => {
@@ -45,18 +45,16 @@ class Question extends Component {
 
 	render() {
 		const { question, authedUser, author, canAnswer } = this.props;
-		const { answer, submittingAnswer, redirectToHome } = this.state;
+		const { answer, submittingAnswer } = this.state;
 
-		if (redirectToHome) {
-			return <Redirect to="/" />;
-		}
+		const existingAnswer = question ? authedUser.answers[question.id] : null;
 
 		return (
-			question ? <div className="qs">
-				<div className="qs__header">
-					<div className="qs__header_left">
+			question ? <div className="q">
+				<div className="q__header">
+					<div className="q__header_left">
 						<Avatar alt={author.name} src={author.avatarURL} />
-						<span className="qs__header_text">{author.name} asks:</span>
+						<span className="q__header_text">{author.name} asks:</span>
 					</div>
 
 					{!canAnswer && <Link to={'/questions/' + question.id}>
@@ -69,7 +67,7 @@ class Question extends Component {
 							color="secondary"
 							variant="contained"
 							onClick={this.handleAnswerQuestion}
-							disabled={!answer && !authedUser.answers[question.id]}
+							disabled={!answer || existingAnswer}
 						>
 							{!submittingAnswer && 'Submit'}
 							{submittingAnswer && <CircularProgress color="inherit" size={24} />}
@@ -78,27 +76,51 @@ class Question extends Component {
 
 				</div>
 
-				<div className="qs__ask">Would you rather:</div>
+				<div className="q__ask">Would you rather:</div>
 
-				<div className="qs__options">
-					<FormControl component="fieldset">
+				<div className="q__options">
+					<FormControl
+						component="fieldset"
+					>
 						<RadioGroup
 							aria-label="Answers"
 							name="answers"
 							onChange={this.handleSelectOption}
-							value={answer || authedUser.answers[question.id]}
+							value={answer || existingAnswer}
 						>
 							<FormControlLabel
-								disabled={!canAnswer}
+								disabled={!canAnswer || (typeof existingAnswer !== 'undefined')}
 								value="optionOne"
+								classes={{root: "q__radio-label"}}
 								control={<Radio />}
-								label={question.optionOne.text}
+								label={
+									<span>
+										<div className="q__radio-label_label">{question.optionOne.text}</div>
+										{(canAnswer && existingAnswer) &&
+											<QuestionResults
+												question={question}
+												option="optionOne"
+											/>
+										}
+									</span>
+								}
 							/>
 							<FormControlLabel
-								disabled={!canAnswer}
+								disabled={!canAnswer || (typeof existingAnswer !== 'undefined')}
 								value="optionTwo"
+								classes={{root: "q__radio-label"}}
 								control={<Radio />}
-								label={question.optionTwo.text}
+								label={
+									<span>
+										<div className="q__radio-label_label">{question.optionTwo.text}</div>
+										{(canAnswer && existingAnswer) &&
+											<QuestionResults
+												question={question}
+												option="optionTwo"
+											/>
+										}
+									</span>
+								}
 							/>
 						</RadioGroup>
 					</FormControl>
