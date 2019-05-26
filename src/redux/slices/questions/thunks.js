@@ -1,5 +1,5 @@
-import { getQuestions, saveQuestionAnswer } from "../../../api/api";
-import { receiveQuestions, setQuestionAnswer } from './actions';
+import { getQuestions, saveQuestionAnswer, saveQuestion } from "../../../api/api";
+import { receiveQuestions, setQuestionAnswer, saveNewQuestion } from './actions';
 import { setUserAnswer } from '../users/actions';
 
 
@@ -12,6 +12,17 @@ const handleGetQuestions = () => {
 	}
 };
 
+const createQuestion = (optionOneText, optionTwoText) => {
+	return (dispatch, getState) => {
+		const author = getState().authedUser;
+
+		return saveQuestion({optionOneText, optionTwoText, author})
+			.then( question => {
+				dispatch(saveNewQuestion(question))
+			})
+	}
+};
+
 const answerQuestion = ({ authedUser, qid, answer }) => {
 	return (dispatch, getState) => {
 		const { questions, users } = getState();
@@ -19,16 +30,10 @@ const answerQuestion = ({ authedUser, qid, answer }) => {
 		// Update question
 		const question = questions[qid];
 		const updatedQuestion = {...question};
+		const otherAnswer = answer === 'optionOne' ? 'optionTwo' : 'optionOne';
+		updatedQuestion[answer].votes = [...new Set(updatedQuestion[answer].votes), authedUser];
+		updatedQuestion[otherAnswer].votes = [...new Set(updatedQuestion[otherAnswer].votes)];
 
-		if (!question[answer].votes.includes(authedUser)) {
-			updatedQuestion.optionOne.votes = answer === 'optionOne'
-				? [...updatedQuestion.optionOne.votes, authedUser]
-				: updatedQuestion.optionOne.votes.filter( userId => userId !== authedUser );
-
-			updatedQuestion.optionTwo.votes = answer === 'optionTwo'
-				? [...updatedQuestion.optionTwo.votes, authedUser]
-				: updatedQuestion.optionTwo.votes.filter( userId => userId !== authedUser );
-		}
 
 		// Update user
 		const user = users[authedUser];
@@ -40,7 +45,7 @@ const answerQuestion = ({ authedUser, qid, answer }) => {
 
 		// Save answer and dispatch updated question and user
 		return saveQuestionAnswer({ authedUser, qid, answer })
-			.then( () => {
+			.then( (response) => {
 				dispatch(setQuestionAnswer(updatedQuestion));
 				dispatch(setUserAnswer(updatedUser));
 			})
@@ -49,5 +54,6 @@ const answerQuestion = ({ authedUser, qid, answer }) => {
 
 export default {
 	handleGetQuestions,
-	answerQuestion
+	answerQuestion,
+	createQuestion
 };

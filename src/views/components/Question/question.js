@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
@@ -14,6 +13,7 @@ import { questionThunks } from '../../../redux/slices/questions';
 
 import './question.css';
 import QuestionResults from "../QuestionResults/question-results";
+import NotFound from "../../pages/NotFound/not-found";
 
 
 class Question extends Component {
@@ -49,6 +49,10 @@ class Question extends Component {
 
 		const existingAnswer = question ? authedUser.answers[question.id] : null;
 
+		if (!question) {
+			return <NotFound />;
+		}
+
 		return (
 			question ? <div className="q">
 				<div className="q__header">
@@ -67,7 +71,7 @@ class Question extends Component {
 							color="secondary"
 							variant="contained"
 							onClick={this.handleAnswerQuestion}
-							disabled={!answer || existingAnswer}
+							disabled={!answer || (typeof existingAnswer !== 'undefined')}
 						>
 							{!submittingAnswer && 'Submit'}
 							{submittingAnswer && <CircularProgress color="inherit" size={24} />}
@@ -136,7 +140,7 @@ const mapStateToProps = ({ users, questions, authedUser }, ownProps) => {
 	return {
 		authedUser: users[authedUser],
 		question: questions[ownProps.questionId],
-		author: (Object.keys(users).length && Object.keys(questions).length)
+		author: (questions[ownProps.questionId] && Object.keys(users).length && Object.keys(questions).length)
 			? users[questions[ownProps.questionId].author]
 			: {}
 	}

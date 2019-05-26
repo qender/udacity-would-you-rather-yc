@@ -1,0 +1,9 @@
+.nf {
+    padding: 20px;
+    text-align: center;
+}
+
+.nf__text {
+    font-size: 24px;
+    margin-bottom: 20px;
+}

@@ -13,3 +13,10 @@ export const setQuestionAnswer = (updatedQuestion) => {
 		updatedQuestion
 	}
 };
+
+export const saveNewQuestion = question => {
+	return {
+		type: types.SAVE_QUESTION,
+		question
+	}
+};

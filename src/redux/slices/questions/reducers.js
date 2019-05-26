@@ -13,6 +13,11 @@ export default function questions (state = {}, action) {
 				...state,
 				[action.updatedQuestion.id]: action.updatedQuestion
 			};
+		case types.SAVE_QUESTION:
+			return {
+				...state,
+				[action.question.id]: action.question
+			};
 		default:
 			return state;
 	}

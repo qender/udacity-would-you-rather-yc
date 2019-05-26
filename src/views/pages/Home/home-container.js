@@ -17,7 +17,9 @@ class HomeContainer extends Component {
 
 const mapStateToProps = ({ questions, users, authedUser }) => {
 	return {
-		questions: Object.keys(questions).map(questionId => questions[questionId]),
+		questions: Object.keys(questions)
+			.map(questionId => questions[questionId])
+			.sort((a, b) => b.timestamp - a.timestamp),
 		authedUser: users[authedUser]
 	}
 };
