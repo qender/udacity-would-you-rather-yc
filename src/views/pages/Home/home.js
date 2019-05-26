@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Loader from '../../components/Loader/loader';
-import QuestionSummary from '../../components/QuestionSummary/question-summary';
+import Question from '../../components/Question/question';
 
 import './home.css';
 
@@ -51,25 +51,29 @@ class Home extends Component {
 					{selectedTab === 0 && <div>
 						{gettingQuestions && <Loader />}
 						{!gettingQuestions && unansweredQuestions.map(question => (
-							<QuestionSummary
+							<Question
 								key={question.id}
-								question={question}
-								disableOptions={true}
+								questionId={question.id}
+								canAnswer={false}
 							/>
 						))}
+						{(!gettingQuestions && unansweredQuestions.length === 0) &&
+							<div className="home__no-questions">No unanswered questions</div>
+						}
 					</div>}
-
 
 					{selectedTab === 1 && <div>
 						{gettingQuestions && <Loader />}
 						{!gettingQuestions && answeredQuestions.map(question => (
-							<QuestionSummary
+							<Question
 								key={question.id}
-								question={question}
-								selectedAnswer={authedUser.answers[question.id]}
-								disableOptions={true}
+								questionId={question.id}
+								canAnswer={false}
 							/>
 						))}
+						{(!gettingQuestions && answeredQuestions.length === 0) &&
+							<div className="home__no-questions">No questions answered</div>
+						}
 					</div>}
 				</div>
 			</section>

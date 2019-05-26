@@ -27,7 +27,7 @@ class App extends Component {
                     <Switch>
                         <PrivateRouteContainer path='/' exact component={HomeContainer} />
                         <PrivateRouteContainer path='/leaderboard' component={Leaderboard} />
-                        <PrivateRouteContainer path='/questions' component={Poll} />
+                        <PrivateRouteContainer path='/questions/:question_id' component={Poll} />
                         <PrivateRouteContainer path='/add' component={NewQuestion} />
                         <Route path='/login' exact component={LoginContainer} />
                         <Route component={NotFound}/>

@@ -8,6 +8,11 @@ export default function users (state = {}, action) {
 				...state,
 				...action.users
 			};
+		case types.SET_USER_ANSWER:
+			return {
+				...state,
+				[action.updatedUser.id]: action.updatedUser
+			};
 		default:
 			return state;
 	}

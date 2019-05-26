@@ -6,3 +6,10 @@ export const receiveQuestions = (questions) => {
 		questions
 	}
 };
+
+export const setQuestionAnswer = (updatedQuestion) => {
+	return {
+		type: types.SET_QUESTION_ANSWER,
+		updatedQuestion
+	}
+};

@@ -7,3 +7,10 @@ export const receiveUsers = (users) => {
 		users
 	}
 };
+
+export const setUserAnswer = (updatedUser) => {
+	return {
+		type: types.SET_USER_ANSWER,
+		updatedUser
+	}
+};

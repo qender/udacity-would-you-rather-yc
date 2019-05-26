@@ -8,6 +8,11 @@ export default function questions (state = {}, action) {
 				...state,
 				...action.questions
 			};
+		case types.SET_QUESTION_ANSWER:
+			return {
+				...state,
+				[action.updatedQuestion.id]: action.updatedQuestion
+			};
 		default:
 			return state;
 	}
