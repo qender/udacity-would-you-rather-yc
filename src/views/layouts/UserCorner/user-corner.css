@@ -1,0 +1,13 @@
+.user-corner {
+    display: flex;
+    align-items: center;
+}
+
+.user-corner__greeting {
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.user-corner__avatar-container {
+    cursor: pointer;
+}
