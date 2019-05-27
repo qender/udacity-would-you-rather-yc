@@ -18,7 +18,7 @@ const createQuestion = (optionOneText, optionTwoText) => {
 
 		return saveQuestion({optionOneText, optionTwoText, author})
 			.then( question => {
-				dispatch(saveNewQuestion(question))
+				dispatch(saveNewQuestion(question, author));
 			})
 	}
 };

@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { userThunks } from "../../../redux/slices/users";
 import HomeContainer from '../../pages/Home/home-container';
-import Leaderboard from '../../pages/Leaderboard/leaderboard';
+import LeaderboardContainer from '../../pages/Leaderboard/leaderboard-container';
 import LoginContainer from '../../pages/Login/login-container';
 import Poll from '../../pages/Poll/poll';
 import NewQuestion from '../../pages/NewQuestion/new-question';
@@ -26,7 +26,7 @@ class App extends Component {
                     {authedUser && <NavBar/>}
                     <Switch>
                         <PrivateRouteContainer path='/' exact component={HomeContainer} />
-                        <PrivateRouteContainer path='/leaderboard' component={Leaderboard} />
+                        <PrivateRouteContainer path='/leaderboard' component={LeaderboardContainer} />
                         <PrivateRouteContainer path='/questions/:question_id' component={Poll} />
                         <PrivateRouteContainer path='/add' component={NewQuestion} />
                         <Route path='/login' exact component={LoginContainer} />

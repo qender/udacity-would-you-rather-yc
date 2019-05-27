@@ -1,4 +1,5 @@
 import types from './types';
+import questionTypes from '../questions/types';
 
 
 export default function users (state = {}, action) {
@@ -12,6 +13,17 @@ export default function users (state = {}, action) {
 			return {
 				...state,
 				[action.updatedUser.id]: action.updatedUser
+			};
+		case questionTypes.SAVE_QUESTION:
+			return {
+				...state,
+				[action.author]: {
+					...state[action.author],
+					questions: [
+						...state[action.author].questions,
+						action.question.id
+					]
+				}
 			};
 		default:
 			return state;

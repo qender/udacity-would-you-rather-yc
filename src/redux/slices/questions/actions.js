@@ -14,9 +14,10 @@ export const setQuestionAnswer = (updatedQuestion) => {
 	}
 };
 
-export const saveNewQuestion = question => {
+export const saveNewQuestion = (question, author) => {
 	return {
 		type: types.SAVE_QUESTION,
-		question
+		question,
+		author
 	}
 };
